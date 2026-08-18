@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Erika Helfenstern — Desarrolladora Web</title>
+<meta name="description" content="Erika Helfenstern — Desarrolladora Web híbrida (Front-end, QA/testing, UX/UI)." />
+<style>
+  /* Tipografía y colores directos */
+  body { margin:0; font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing:antialiased; background: linear-gradient(180deg,#071029 0%, #0a1220 100%); color:#0f1720; }
+  a { color:#0ea5e9; text-decoration:none; }
+
+  /* Contenedor */
+  .wrap { max-width:1000px; margin:28px auto; padding:28px; background:#eef1f6; border-radius:12px; box-shadow:0 10px 50px rgba(2,6,23,0.45); }
+
+  /* Encabezado */
+  header { display:grid; grid-template-columns:92px 1fr auto; gap:18px; align-items:center; margin-bottom:18px; }
+  .avatar { width:92px; height:92px; border-radius:10px; background:linear-gradient(135deg,#05232f,#083544); display:flex; align-items:center; justify-content:center; color:#eef1f6; font-weight:800; font-size:28px; box-shadow:0 6px 20px rgba(8,20,30,0.25); }
+  .head { display:flex; flex-direction:column; gap:6px; }
+  .name { font-size:22px; font-weight:800; margin:0; color:#0f1720; }
+  .role { margin:0; color:#54606f; font-size:13px; }
+  .meta { display:flex; gap:12px; flex-wrap:wrap; margin-top:6px; color:#54606f; font-size:13px; }
+
+  /* Barra de acciones en header */
+  .actions { display:flex; gap:10px; align-items:center; justify-content:flex-end; }
+  @media(max-width:880px){
+    header { grid-template-columns:92px 1fr; grid-auto-rows:auto; }
+    .actions { grid-column:1 / -1; justify-content:flex-start; margin-top:6px; }
+    .avatar { display:none; }
+  }
+
+  /* Cards */
+  .card { background:#f3f5f8; padding:18px; border-radius:10px; box-shadow:0 6px 24px rgba(11,18,32,0.04); transition:transform .2s ease, box-shadow .2s ease; }
+  .card:hover{ transform:translateY(-4px); box-shadow:0 14px 36px rgba(11,18,32,0.08); }
+
+  h2 { font-size:15px; margin:0 0 10px 0; color:#0ea5e9; font-weight:700; display:inline-block; position:relative; }
+  h2::after { content:""; position:absolute; left:0; bottom:-6px; height:4px; width:0; background:linear-gradient(90deg,#0ea5e9,#075985); border-radius:3px; transition:width .35s; }
+  .card:hover h2::after { width:60%; }
+
+  p.lead { margin:0; color:#0f1720; line-height:1.55; font-size:14px; }
+
+  /* Layout principal */
+  .layout { display:grid; grid-template-columns:1fr 320px; gap:22px; }
+  @media(max-width:880px){ .layout{grid-template-columns:1fr} }
+
+  /* Skills */
+  .skills-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .skill { padding:10px; border-radius:8px; font-size:13px; color:#54606f; border:1px solid rgba(11,18,32,0.04); display:flex; gap:8px; align-items:flex-start; }
+  .skill b { min-width:92px; color:#0f1720; font-weight:700; }
+
+  /* Experience */
+  .exp { border-left:4px solid rgba(14,165,233,0.12); padding:12px 12px 12px 16px; margin-bottom:12px; border-radius:6px; background:linear-gradient(180deg, rgba(14,165,233,0.01), transparent); }
+  .exp h3 { margin:0; font-size:15px; color:#0f1720; }
+  .exp .meta { margin-top:6px; color:#54606f; font-size:13px; }
+  .exp p { margin:8px 0 0; color:#0f1720; font-size:14px; line-height:1.5; }
+
+  /* Aside / Contacto */
+  aside { display:flex; flex-direction:column; gap:14px; }
+  .contact-card .row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .contact-card .label { font-size:12px; color:#54606f; margin-bottom:4px; display:block; }
+  .contact-card a { font-weight:700; color:#0ea5e9; }
+  .copy-btn { border:1px solid rgba(11,18,32,0.06); background:#f8fafc; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:700; color:#0f1720; transition:all .2s ease; }
+  .copy-btn:hover { box-shadow:0 6px 18px rgba(11,18,32,0.06); transform:translateY(-2px); }
+
+  /* Progreso */
+  .progress { height:10px; background:#eef3f6; border-radius:10px; overflow:hidden; border:1px solid rgba(11,18,32,0.04); }
+  .bar { height:100%; background: linear-gradient(90deg,#0ea5e9,#60a5fa); border-radius:10px; width:0; transition: width .9s cubic-bezier(.2,.9,.2,1); }
+
+  /* Botones modernos */
+  .btn {
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(14,165,233,0.3);
+    transition: all 0.25s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(14,165,233,0.45); }
+  .btn:active { transform: translateY(0); box-shadow: 0 2px 6px rgba(14,165,233,0.25); }
+  .btn[disabled]{ opacity:.6; cursor:wait; }
+
+  .btn.secondary {
+    background: transparent;
+    color: #0ea5e9;
+    border: 2px solid #0ea5e9;
+    box-shadow: none;
+  }
+  .btn.secondary:hover { background: #0ea5e9; color: #fff; }
+
+  /* Footer */
+  footer { margin-top:18px; text-align:center; color:#54606f; font-size:12px; }
+
+  .sr-only { position:absolute!important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+
+  @media print {
+    .wrap { box-shadow:none; background:transparent; border-radius:0; padding:0; }
+    .card { background:transparent; box-shadow:none; padding:0; border:none; }
+    .no-print { display:none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap" role="main" aria-labelledby="perfil-title">
+  <header>
+    <div class="avatar" aria-hidden="true">EH</div>
+    <div class="head">
+      <h1 id="perfil-title" class="name">Erika Helfenstern</h1>
+      <p class="role">Desarrollo Web | QA Testing |</p>
+      <div class="meta">
+        <div><strong>Ubicación</strong> CABA, Buenos Aires</div>
+        <div><strong>Modalidad</strong> Híbrida / Remota</div>
+        <div><strong>Disponibilidad</strong> Inmediata </div>
+      </div>
+    </div>
+    <!-- Acciones bien ubicadas y visibles -->
+    <div class="actions no-print">
+      <button id="exportCurrent" class="btn">Exportar CV</button>
+      <a href="https://github.com/hevieri" class="btn secondary">Ver proyectos</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div>
+      <section class="card" aria-labelledby="resumen-title">
+        <h2 id="resumen-title">Resumen profesional</h2>
+        <p class="lead">Soy desarrolladora web con perfil híbrido que combina Front-end y Testing QA. Trabajo con documentación modular, validación funcional y exploratoria, y diseño de experiencias accesibles.</p>
+      </section>
+
+      <section class="card" aria-labelledby="skills-title">
+        <h2 id="skills-title">Competencias clave</h2>
+        <div class="skills-grid" role="list">
+          <div class="skill" role="listitem"><b>Lenguajes</b> HTML5; CSS3; JavaScript; SQL</div>
+          <div class="skill" role="listitem"><b>Frameworks / Lib</b> WordPress; Vanilla JS; CSS, SASS</div>
+          <div class="skill" role="listitem"><b>Testing QA</b> Exploratorio; Pruebas funcionales; Compatibilidad; Documentación reproducible</div>
+          <div class="skill" role="listitem"><b>UX / UI</b> Prototipado; Accesibilidad; Diseño de interacción; Heurísticas y pruebas de usabilidad</div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="experiencia-title">
+        <h2 id="experiencia-title">Experiencia seleccionada</h2>
+
+        <article class="exp" aria-labelledby="exp-1">
+          <h3 id="exp-1">UTest— Agosto 2025</h3>
+          <div class="meta">2025 — Presente ·</div>
+          <p>Coordinación de sprints de QA, diseño de checklists, ejecución de pruebas exploratorias y reporte de bugs con pasos reproducibles. Integración de criterios de accesibilidad y validación de flujos de pago y compatibilidad móvil.</p>
+        </article>
+
+    
+
+      </section>
+
+      <section class="card" aria-labelledby="educacion-title">
+        <h2 id="educacion-title">Formación</h2>
+        <p style="margin:0 0 8px 0;"><strong>Digital Graphic Design</strong> — ORT Argentina 2024</p>
+        <p style="margin:0; color:#54606f; font-size:13px">Egresada de la técnicatura en Diseño Gráfico Digital, con titulo intermedio en Diseñador de Interfaces Gráficas.</p>
+      </section>
+    </div>
+
+    <aside>
+      <section class="card contact-card" aria-labelledby="contacto-title">
+        <h2 id="contacto-title">Contacto</h2>
+
+        <div class="row" style="margin-bottom:10px;">
+          <div>
+            <span class="label">Email</span>
+            <div><a href="mailto:erika@example.com" id="emailLink">hevieri.dev@gmail.com</a></div>
+          </div>
+          <div>
+            <button class="copy-btn no-print" id="copyEmail">Copiar</button>
+          </div>
+        </div>
+
+        <div class="row" style="margin-bottom:10px;">
+          <div>
+            <span class="label">LinkedIn</span>
+            <div><a href="https://www.linkedin.com/in/hevieri/" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/in/hevieri/</a></div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-bottom:10px;">
+          <div>
+            <span class="label">Ubicación</span>
+            <div>Almagro, Ciudad Autónoma de Buenos Aires</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <span class="label">Tel</span>
+            <div>+54 9 11 62178105</div>
+          </div>
+        </div>
+
+        <div id="copyFeedback" style="margin-top:8px; min-height:18px; color:#54606f; font-size:13px" aria-live="polite"></div>
+      </section>
+
+      <section class="card" aria-labelledby="habilidades-title">
+        <h2 id="habilidades-title">Nivel</h2>
+        <div style="margin-bottom:8px; font-size:13px; color:#54606f">Front-end</div>
+        <div class="progress"><div class="bar" data-val="86"></div></div>
+
+        <div style="margin:10px 0 8px 0; font-size:13px; color:#54606f">Testing QA</div>
+        <div class="progress"><div class="bar" data-val="90"></div></div>
+
+        <div style="margin:10px 0 8px 0; font-size:13px; color:#54606f">UX / UI</div>
+        <div class="progress"><div class="bar" data-val="80"></div></div>
+      </section>
+
+      <section class="card" aria-labelledby="idiomas-title">
+        <h2 id="idiomas-title">Idiomas</h2>
+        <p style="margin:0; color:#54606f"><strong>Español</strong> nativo · <strong>Inglés</strong> intermedio</p>
+      </section>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div style="text-align:left;">
+        <strong>hevieri</strong>
+        <div style="margin-top:6px; color:#54606f; font-size:13px;">Erika Helfenstern</div>
+      </div>
+      <div style="text-align:right; color:#54606f; font-size:12px;">
+         Última actualización: 2025
+      </div>
+    </div>
+  </footer>
+
+  <p class="sr-only">CV onepage optimizado para ATS: resumen, skills, experiencia, formación y contacto.</p>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+  // Elementos
+  var exportBtn = document.getElementById('exportCurrent');
+  var copyBtn = document.getElementById('copyEmail');
+  var emailLink = document.getElementById('emailLink');
+  var copyFeedback = document.getElementById('copyFeedback');
+
+  // Metadatos / opciones PDF
+  var meta = {
+    filename: 'Erika_Helfenstern_CV_Frontend_2025.pdf',
+    title: 'Erika Helfenstern — Desarrolladora Web (Front-end · QA · UX)',
+    subject: 'CV — Front-end Developer',
+    author: 'Erika Helfenstern',
+    keywords: 'Front-end; HTML; CSS; JavaScript; WordPress; QA; accesibilidad'
+  };
+
+  var options = {
+    margin: [12,12,12,12],
+    filename: meta.filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  // Export PDF
+  var exporting = false;
+  function exportPDF(){
+    if(exporting) return;
+    exporting = true;
+    exportBtn.disabled = true;
+    html2pdf().set(options).from(document.querySelector('.wrap')).toPdf().get('pdf').then(function(pdf){
+      try { pdf.setProperties({ title: meta.title, subject: meta.subject, author: meta.author, keywords: meta.keywords }); } catch(e){}
+    }).save().finally(function(){
+      exporting = false;
+      exportBtn.disabled = false;
+    });
+  }
+  exportBtn.addEventListener('click', exportPDF);
+
+  // Copiar email
+  copyBtn.addEventListener('click', function(){
+    var txt = emailLink.textContent.trim();
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){
+        copyFeedback.textContent = 'Email copiado al portapapeles';
+        setTimeout(function(){ copyFeedback.textContent = ''; }, 2400);
+      }, function(){
+        copyFeedback.textContent = 'No se pudo copiar. Usa Ctrl+C';
+        setTimeout(function(){ copyFeedback.textContent = ''; }, 2400);
+      });
+    } else {
+      copyFeedback.textContent = 'No hay acceso al portapapeles';
+      setTimeout(function(){ copyFeedback.textContent = ''; }, 2400);
+    }
+  });
+
+  // Reveal on scroll (simple)
+  if('IntersectionObserver' in window){
+    var reveal = document.querySelectorAll('.card,.exp');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.style.transform='translateY(0)';
+          e.target.style.opacity=1;
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:.12});
+    reveal.forEach(function(el){
+      el.style.transform='translateY(8px)';
+      el.style.opacity=0;
+      el.style.transition='transform .52s cubic-bezier(.2,.9,.2,1), opacity .52s ease';
+      io.observe(el);
+    });
+  }
+
+  // Barras de progreso
+  document.querySelectorAll('.bar').forEach(function(b){
+    var v = parseInt(b.getAttribute('data-val') || '0', 10);
+    setTimeout(function(){ b.style.width = (v>0? v+'%':'0%'); }, 600);
+  });
+</script>
+</body>
+</html>

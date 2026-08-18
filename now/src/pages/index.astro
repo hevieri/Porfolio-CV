@@ -1,0 +1,30 @@
+---
+import Layout from '@/web/components/layout.astro';
+import Sidebar from '@/web/components/sidebar.astro';
+import MainSection from '@/web/sections/main/main-section.web.astro';
+import SkillsSection from '@/web/sections/skills/skills-section.web.astro';
+import ExperienceSection from '@/web/sections/experience/experience-section.web.astro';
+import PortfolioSection from '@/web/sections/portfolio/portfolio-section.web.astro';
+import EducationSection from '@/web/sections/education/education-section.web.astro';
+import TestimonialsSection from '@/web/sections/testimonials/testimonials-section.web.astro';
+import FavoritesSection from '@/web/sections/favorites/favorites-section.web.astro';
+import cv from '@/data';
+
+const { config, sections } = cv();
+---
+
+<Layout {...config} sections={sections}>
+  <div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 py-3">
+    <Sidebar sections={sections} />
+  </div>
+  <main class="w-full max-w-4xl space-y-4 px-4 pt-20 pb-12 sm:space-y-6 sm:px-8 lg:space-y-8">
+    <MainSection {...sections.main} />
+    <SkillsSection {...sections.skills} />
+    <ExperienceSection {...sections.experience} />
+    <PortfolioSection {...sections.portfolio} />
+    <EducationSection {...sections.education} />
+    <TestimonialsSection {...sections.testimonials} />
+    <FavoritesSection {...sections.favorites} />
+  </main>
+  <script src="../web/scripts/initialize-tooltips.ts"></script>
+</Layout>

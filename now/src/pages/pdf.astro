@@ -1,0 +1,23 @@
+---
+import Fonts from '@/components/fonts.astro';
+import ExperienceSection from '@/pdf/sections/experience-section.pdf.astro';
+import MainSection from '@/pdf/sections/main-section.pdf.astro';
+
+import cv from '@/data';
+
+const { config, sections } = cv();
+---
+
+<!DOCTYPE html>
+<html lang={config.i18n.locale.code}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>PDF preview</title>
+    <Fonts />
+  </head>
+  <body class="flex flex-col bg-white p-[8mm] print:p-0 text-sm">
+    {sections.main && <MainSection {...sections.main} />}
+    {sections.experience && <ExperienceSection {...sections.experience} />}
+  </body>
+</html>

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Proyectos — Erika Helfenstern</title>
+<meta name="description" content="Proyectos de Erika Helfenstern con live preview y repositorios mejorados.">
+<style>
+  /* Base coherente con el CV */
+  body{margin:0;font-family:Inter,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;background:linear-gradient(180deg,#071029 0%,#0a1220 100%);color:#0f1720}
+  .wrap{max-width:1000px;margin:28px auto;padding:28px;background:#eef1f6;border-radius:12px;box-shadow:0 10px 50px rgba(2,6,23,.45)}
+
+  /* Header con acciones */
+  header{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin-bottom:18px}
+  .title-block h1{margin:0;font-size:22px;color:#0f1720;font-weight:800}
+  .title-block .meta{color:#54606f;font-size:13px;margin-top:6px}
+  .actions{display:flex;gap:10px;align-items:center;justify-content:flex-end}
+  @media(max-width:880px){header{grid-template-columns:1fr}.actions{justify-content:flex-start}}
+
+  /* Botones (pill/outline) */
+  .btn{
+    background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+    color:#fff;border:none;padding:10px 18px;border-radius:50px;
+    font-weight:600;font-size:14px;letter-spacing:.2px;cursor:pointer;
+    box-shadow:0 4px 12px rgba(14,165,233,.3);transition:all .18s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(14,165,233,.45)}
+  .btn:active{transform:translateY(0);box-shadow:0 2px 6px rgba(14,165,233,.25)}
+  .btn.secondary{background:transparent;color:#0ea5e9;border:2px solid #0ea5e9;box-shadow:none}
+  .btn.secondary:hover{background:#0ea5e9;color:#fff}
+
+  /* Repo buttons using main palette */
+  .btn.repo-primary{background:linear-gradient(135deg,#0ea5e9,#38bdf8); color:#fff}
+  .btn.repo-copy{background:#fff;color:#0f1720;border:2px solid rgba(11,18,32,.08);box-shadow:none;padding:8px 12px;border-radius:10px}
+
+  /* Card / project list */
+  .card{background:#f3f5f8;padding:18px;border-radius:10px;box-shadow:0 6px 24px rgba(11,18,32,.04)}
+  .proj{border:1px solid rgba(11,18,32,.06);padding:16px;border-radius:10px;margin-bottom:14px;background:transparent;transition:transform .18s ease, box-shadow .18s ease}
+  .proj:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(11,18,32,.08)}
+  .proj-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  .proj h3{margin:0;color:#0f1720;font-size:16px}
+  .meta{color:#54606f;font-size:13px}
+
+  /* Viewer (Live + Repo) */
+  .viewer{margin-top:12px;border:1px solid rgba(11,18,32,.06);border-radius:10px;background:#f8fafc;overflow:hidden}
+  .tabs{display:flex;gap:6px;padding:8px;background:#eef3f6;border-bottom:1px solid rgba(11,18,32,.06)}
+  .tab{padding:8px 12px;border-radius:50px;font-size:13px;color:#0f1720;background:#fff;border:1px solid rgba(11,18,32,.08);cursor:pointer;transition:all .14s}
+  .tab.active{background:#0ea5e9;color:#fff;border-color:#0ea5e9;box-shadow:0 2px 10px rgba(14,165,233,.18)}
+  .panel{display:none;padding:12px;background:#f8fafc}
+  .panel.active{display:block}
+
+  /* Live iframe */
+  .live-wrap{position:relative}
+  .live{width:100%;height:360px;border:1px solid rgba(11,18,32,.08);border-radius:10px;background:#fff}
+  .live-fallback{display:none;margin-top:8px;color:#54606f;font-size:13px}
+  .open-external{position:absolute;top:12px;right:12px}
+
+  /* Repo block redesigned */
+  .repo{
+    display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;
+    border:1px solid rgba(11,18,32,.08);border-radius:10px;padding:12px;background:#fff;
+    box-shadow:0 4px 12px rgba(11,18,32,.04);
+  }
+  .repo-icon{
+    width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;letter-spacing:.2px;box-shadow:0 6px 18px rgba(14,165,233,.28);
+  }
+  .repo-main{display:flex;flex-direction:column;gap:6px}
+  .repo-title{margin:0;font-size:15px;font-weight:700;color:#0f1720}
+  .repo-desc{margin:0;font-size:13px;color:#54606f}
+  .repo-link{
+    font-family:ui-monospace,Menlo,Monaco,Consolas,"Courier New",monospace;
+    font-size:13px;color:#0f1720;text-decoration:none;background:#f8fafc;border:1px solid rgba(11,18,32,.08);
+    padding:6px 8px;border-radius:8px;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .repo-badges{display:flex;gap:6px;flex-wrap:wrap}
+  .badge{background:#eef3f6;color:#0f1720;border:1px solid rgba(11,18,32,.08);padding:6px 8px;border-radius:50px;font-size:12px}
+
+  .repo-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end}
+
+  /* Project tags */
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .tag{background:#eef8ff;color:#0f1720;padding:6px 8px;border-radius:6px;border:1px solid rgba(14,165,233,.06);font-size:12px}
+
+  /* Reveal on scroll */
+  .reveal{opacity:0;transform:translateY(8px);transition:transform .52s cubic-bezier(.2,.9,.2,1), opacity .52s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  footer{margin-top:18px;text-align:center;color:#54606f;font-size:12px}
+  @media print{ .wrap{box-shadow:none;background:transparent} .no-print{display:none} }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="title-block">
+      <h1>Proyectos destacados</h1>
+      <div class="meta">Live preview y repositorios (vista para presentar en CV)</div>
+    </div>
+    <div class="actions">
+      <a href="index.html" class="btn secondary no-print">Volver al CV</a>
+    </div>
+  </header>
+
+  <div class="card">
+    <!-- Proyecto 1 -->
+    <article class="proj reveal" id="p1">
+      <div class="proj-header">
+        <div>
+          <h3>Porfolio Testing</h3>
+          <div class="meta">QA Manual · Excel · </div>
+        </div>
+      </div>
+
+      <div class="viewer">
+        <div class="tabs" role="tablist" aria-label="Visualizador del proyecto 1">
+          <button class="tab active" role="tab" aria-controls="p1-live" aria-selected="true">Live</button>
+          <button class="tab" role="tab" aria-controls="p1-repo" aria-selected="false">Repo</button>
+        </div>
+
+        <!-- Live -->
+        <div id="p1-live" class="panel active" role="tabpanel">
+          <div class="live-wrap">
+            <!-- Reemplazá src por tu sitio (si permite embed) -->
+            <iframe class="live" src="https://github.com/hevieri/TestingPortfolio" title="Live preview del proyecto 1"></iframe>
+            <div class="open-external">
+              <a href="https://github.com/hevieri/TestingPortfoli" target="_blank" rel="noopener noreferrer" class="btn secondary">Abrir sitio</a>
+            </div>
+            <div class="live-fallback">Este sitio podría bloquear incrustación en iframe. Usá “Abrir sitio”.</div>
+          </div>
+        </div>
+
+        <!-- Repo -->
+        <div id="p1-repo" class="panel" role="tabpanel">
+          <div class="repo">
+            <div class="repo-icon" aria-hidden="true">GH</div>
+
+            <div class="repo-main">
+              <div class="repo-title">Sistema de documentación modular</div>
+              <div class="repo-desc">Plantillas y checklist para QA reproducible, con foco en claridad y reusabilidad.</div>
+
+              <!-- URL visible y legible -->
+              <a href="https://github.com/tu-usuario/tu-repo" target="_blank" rel="noopener noreferrer" class="repo-link" title="Abrir repositorio">
+                github.com/tu-usuario/tu-repo
+              </a>
+
+              <!-- Badges (pueden venir duplicadas en HTML, el script las deduplica) -->
+              <div class="repo-badges">
+                <span class="badge">HTML</span>
+                <span class="badge">CSS</span>
+                <span class="badge">Docs</span>
+                <span class="badge">HTML</span> <!-- ejemplo duplicado que será eliminado -->
+              </div>
+            </div>
+
+            <div class="repo-actions">
+              <a href="https://github.com/hevieri/Pokeapi" target="_blank" rel="noopener noreferrer" class="btn repo-primary">Ver repo</a>
+              <button class="btn repo-copy" data-copy="https://github.com/tu-usuario/tu-repo">Copiar URL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">Docs</span>
+        <span class="tag">CSS</span> <!-- ejemplo duplicado -->
+      </div>
+    </article>
+
+    <!-- Proyecto 2 -->
+    <article class="proj reveal" id="p2">
+      <div class="proj-header">
+        <div>
+          <h3>Landing optimizada para e-commerce</h3>
+          <div class="meta">WordPress · Performance · A/B</div>
+        </div>
+      </div>
+
+      <div class="viewer">
+        <div class="tabs" role="tablist" aria-label="Visualizador del proyecto 2">
+          <button class="tab active" role="tab" aria-controls="p2-live" aria-selected="true">Live</button>
+          <button class="tab" role="tab" aria-controls="p2-repo" aria-selected="false">Repo</button>
+        </div>
+
+        <div id="p2-live" class="panel active" role="tabpanel">
+          <div class="live-wrap">
+            <iframe class="live" src="https://github.com/hevieri/Calculador/deployments/github-pages" title="Live preview de la landing"></iframe>
+            <div class="open-external">
+              <a href="https://github.com/hevieri/Calculador/deployments/github-pages" target="_blank" rel="noopener noreferrer" class="btn secondary">Abrir sitio</a>
+            </div>
+            <div class="live-fallback">Este sitio podría bloquear incrustación en iframe. Usá “Abrir sitio”.</div>
+          </div>
+        </div>
+
+        <div id="p2-repo" class="panel" role="tabpanel">
+          <div class="repo">
+            <div class="repo-icon" aria-hidden="true">GH</div>
+
+            <div class="repo-main">
+              <div class="repo-title">Landing e-commerce optimizada</div>
+              <div class="repo-desc">Plantilla WordPress modular, optimizaciones de TTFB y pruebas A/B documentadas.</div>
+
+              <a href="https://github.com/hevieri/Calculador/deployments/github-pages" target="_blank" rel="noopener noreferrer" class="repo-link" title="Abrir repositorio">
+                github.com/tu-usuario/landing-ecommerce
+              </a>
+
+              <div class="repo-badges">
+                <span class="badge">WordPress</span>
+                <span class="badge">Performance</span>
+                <span class="badge">A/B</span>
+                <span class="badge">WordPress</span> <!-- ejemplo duplicado -->
+              </div>
+            </div>
+
+            <div class="repo-actions">
+              <a href="https://github.com/hevieri/Calculador/deployments/github-pages" target="_blank" rel="noopener noreferrer" class="btn repo-primary">Ver repo</a>
+              <button class="btn repo-copy" data-copy="https://github.com/hevieri/Calculador/deployments/github-pages">Copiar URL</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tags">
+        <span class="tag">WordPress</span>
+        <span class="tag">Performance</span>
+        <span class="tag">A/B</span>
+        <span class="tag">A/B</span> <!-- ejemplo duplicado -->
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <div>¿Querés que además muestre "último commit" y "licencia" desde GitHub? Lo puedo integrar cuando me pases las URLs finales.</div>
+  </footer>
+</main>
+
+<script>
+  // Reveal on scroll
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el=> el.classList.add('visible'));
+  }
+
+  // Tabs por proyecto
+  document.querySelectorAll('.viewer').forEach(view=>{
+    const tabs = view.querySelectorAll('.tab');
+    const panels = view.querySelectorAll('.panel');
+    tabs.forEach(tab=>{
+      tab.addEventListener('click', ()=>{
+        tabs.forEach(t=> { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+        panels.forEach(p=> p.classList.remove('active'));
+        const id = tab.getAttribute('aria-controls');
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected','true');
+        const panel = view.querySelector('#'+id);
+        if(panel) panel.classList.add('active');
+      });
+    });
+  });
+
+  // Fallback iframe (X-Frame-Options/CSP)
+  document.querySelectorAll('.live').forEach(frame=>{
+    const fallback = frame.parentElement.querySelector('.live-fallback');
+    let loaded = false;
+    function showFallback(){ if(loaded) return; fallback.style.display = 'block'; }
+    frame.addEventListener('load', ()=> { loaded = true; });
+    frame.addEventListener('error', showFallback);
+    setTimeout(showFallback, 2500);
+  });
+
+  // Copiar URL del repo con feedback
+  document.querySelectorAll('.btn.repo-copy').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const url = btn.getAttribute('data-copy');
+      try{
+        await navigator.clipboard.writeText(url);
+        const orig = btn.textContent;
+        btn.textContent = 'Copiado';
+        setTimeout(()=> btn.textContent = orig, 1600);
+      }catch(e){
+        const orig = btn.textContent;
+        btn.textContent = 'Usá Ctrl+C';
+        setTimeout(()=> btn.textContent = orig, 1600);
+      }
+    });
+  });
+
+  // Deduplicar badges y tags (normaliza y elimina duplicados)
+  function dedupe(containerSelector, itemSelector){
+    document.querySelectorAll(containerSelector).forEach(container=>{
+      const seen = new Map();
+      container.querySelectorAll(itemSelector).forEach(item=>{
+        const raw = (item.textContent || '').trim();
+        if(!raw){ item.remove(); return; }
+        const key = raw.replace(/\s+/g,' ').toLowerCase();
+        if(seen.has(key)){ item.remove(); }
+        else {
+          // mantén la casing del primer encuentro
+          const first = seen.get(key) || raw;
+          item.textContent = first;
+          seen.set(key, first);
+        }
+      });
+    });
+  }
+
+  // Aplica a badges y tags
+  dedupe('.repo-badges', '.badge');
+  dedupe('.tags', '.tag');
+</script>
+</body>
+</html>
+```

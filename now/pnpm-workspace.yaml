@@ -1,0 +1,5 @@
+allowBuilds:
+  '@percy/core': true
+  esbuild: true
+  puppeteer: true
+  sharp: true

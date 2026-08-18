@@ -1,0 +1,25 @@
+---
+import type { LevelledSkill } from '@/types/sections/skills-section.types';
+import Icon from '@/web/components/icon.astro';
+
+export interface Props extends LevelledSkill {}
+
+const { url, icon, iconColor, name, description } = Astro.props;
+
+const WrapperTag = url ? 'a' : 'div';
+---
+
+<WrapperTag
+  class="flex flex-col items-center gap-1.5 p-2.5 bg-gray-800/50 rounded-xl border border-gray-700/50 hover:border-primary-500/50 hover:bg-gray-800 transition-all cursor-default"
+  {...url && { href: url, target: '_blank', rel: 'noopener noreferrer' }}
+>
+  {icon && <Icon name={icon} color={iconColor} size={26} />}
+  <span class="text-[10px] text-gray-400 text-center leading-tight">{name}</span>
+  {
+    description && (
+      <span class="text-[9px] text-gray-500 text-center leading-tight" data-tooltip={description} data-tooltip-placement="top">
+        ⓘ
+      </span>
+    )
+  }
+</WrapperTag>

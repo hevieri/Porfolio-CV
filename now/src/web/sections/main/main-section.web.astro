@@ -1,0 +1,55 @@
+---
+import type { MainSection } from '@/types/sections/main-section.types';
+import Description from '@/web/components/description.astro';
+import DownloadButton from '@/web/components/download-button.astro';
+import LinkButton from '@/web/components/link-button.astro';
+import SectionCard from '@/web/components/section-card.astro';
+import TagsList from '@/web/components/tags-list.astro';
+import Typography from '@/web/components/typography.astro';
+
+export interface Props extends MainSection {}
+
+const { action, config, description, details, fullName, image, links, role, tags } = Astro.props;
+---
+
+<SectionCard {...config} hideTitle>
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-col gap-1">
+        <Typography variant="main-title">{fullName}</Typography>
+        <Typography variant="main-subtitle">{role}</Typography>
+      </div>
+      {
+        links.length > 0 && (
+          <div class="flex flex-wrap gap-3 sm:flex-nowrap">
+            {links.map((link) => (
+              <LinkButton {...link} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
+      {details.map((detail, i) => (
+        <span class="flex items-center gap-1.5">
+          {i > 0 && <span class="text-gray-600">·</span>}
+          <span class="text-gray-500">{detail.label}:</span>
+          {detail.url ? (
+            <a href={detail.url} target={detail.url.startsWith('http') ? '_blank' : '_self'} class="text-gray-300 hover:text-primary-400 transition-colors underline underline-offset-2 decoration-gray-600 hover:decoration-primary-400">
+              {detail.value}
+            </a>
+          ) : (
+            <span class="text-gray-300">{detail.value}</span>
+          )}
+        </span>
+      ))}
+    </div>
+    <div class="border-t border-gray-700/50 pt-5">
+      <Description content={description} />
+    </div>
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <TagsList tags={tags} />
+      <DownloadButton {...action} />
+    </div>
+  </div>
+</SectionCard>
