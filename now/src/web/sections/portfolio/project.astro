@@ -22,40 +22,47 @@ const galleryId = nanoid(8);
 const hasScreenshots = screenshots?.length && screenshots.length > 0;
 const screenshotsIcon = screenshotsConfig?.icon || 'fa6-solid:image';
 const screenshotsTooltip = screenshotsConfig?.title || 'Screenshots';
+const hasMeta = Boolean(dates || image);
 ---
 
-<div class="flex flex-col gap-6">
-  <div class="flex flex-col gap-4">
-    <div class="flex gap-6">
-      <div class="flex w-full flex-col gap-4">
-        <div class="flex gap-4">
-          <Thumbnail src={image} alt={alt} size="small" />
-          <div class="flex w-full justify-between">
-            <div>
-              <Typography variant="item-title">{name}</Typography>
-              <Timestamp dates={dates} />
-            </div>
-            <div class="flex gap-2">
-              {links.map((link) => <LinkButton {...link} />)}
-              {
-                hasScreenshots && (
-                  <LinkButton icon={screenshotsIcon} name={screenshotsTooltip} as="button" data-gallery={galleryId} />
-                )
-              }
-            </div>
-          </div>
-        </div>
-        <div class="inline-grid w-full xl:grid-cols-[auto_auto]">
-          {details.map((detail) => <LabelledValue {...detail} />)}
-        </div>
+<div
+  class:list={[
+    'grid gap-4',
+    hasMeta && 'md:max-lg:grid-cols-[14rem_1fr] md:max-lg:gap-10',
+  ]}
+>
+  {hasMeta && (
+    <div class="flex flex-row items-center gap-3 md:max-lg:flex-col md:max-lg:items-start md:max-lg:gap-1.5">
+      <Thumbnail src={image} alt={alt} size="small" />
+      <Timestamp dates={dates} />
+    </div>
+  )}
+  <div class="flex flex-col gap-3">
+    <div class="flex w-full flex-wrap items-start justify-between gap-2">
+      <Typography
+        variant="item-title"
+        class="inline-block origin-left cursor-default transition-transform duration-200 hover:scale-[1.04]"
+      >
+        {name}
+      </Typography>
+      <div class="flex flex-wrap gap-3">
+        {links.map((link) => <LinkButton {...link} />)}
+        {
+          hasScreenshots && (
+            <LinkButton icon={screenshotsIcon} name={screenshotsTooltip} as="button" data-gallery={galleryId} />
+          )
+        }
       </div>
     </div>
-    <Description content={description} class="col-span-3 col-start-1" />
+    <div class="flex flex-wrap gap-x-8 gap-y-2">
+      {details.map((detail) => <LabelledValue {...detail} />)}
+    </div>
+    <Description content={description} />
+    <TagsList {...tagsList} />
   </div>
-  <TagsList {...tagsList} />
-  <div class="hidden" id={galleryId}>
-    {screenshots?.map((screenshot) => <Photo {...screenshot} />)}
-  </div>
+</div>
+<div class="hidden" id={galleryId}>
+  {screenshots?.map((screenshot) => <Photo {...screenshot} />)}
 </div>
 
 <script>

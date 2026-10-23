@@ -276,3 +276,10 @@ export const shadcn = createSkillFactory({
   iconColor: '#F8FAFC',
   url: 'https://ui.shadcn.com/',
 });
+
+export const excel = createSkillFactory({
+  name: 'Excel',
+  icon: 'simple-icons:microsoftexcel',
+  iconColor: '#217346',
+  url: 'https://www.microsoft.com/excel/',
+});

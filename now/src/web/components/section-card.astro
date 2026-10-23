@@ -7,19 +7,32 @@ export interface Props extends SectionConfig {
   hideTitle?: boolean;
 }
 
-const { title, slug, hideTitle, className, visible } = Astro.props;
+const { title, slug, subtitle, hideTitle, className, visible } = Astro.props;
 ---
 
 {
   visible && (
-    <div
+    <section
       id={slug}
       data-type="section"
-      class:list={['flex flex-col gap-6 rounded-xl bg-gray-800/50 border border-gray-700/50 p-6', className]}
+      class:list={[
+        'flex flex-col gap-8 border-t border-gray-800 pt-12 first:border-t-0 first:pt-0',
+        className,
+      ]}
     >
-      {!hideTitle && <Typography variant="section-title">{title}</Typography>}
+      {!hideTitle && (
+        <header class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+          <Typography
+            variant="section-title"
+            class="inline-block origin-left cursor-default transition-transform duration-200 hover:scale-[1.04]"
+          >
+            {title}
+          </Typography>
+          {subtitle && <p class="max-w-sm text-sm leading-relaxed text-gray-500 sm:text-right">{subtitle}</p>}
+        </header>
+      )}
       <slot />
-    </div>
+    </section>
   )
 }
 

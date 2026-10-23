@@ -7,6 +7,7 @@ const educationSectionData = {
     title: 'Formación',
     slug: 'education',
     icon: 'fa6-solid:graduation-cap',
+    subtitle: 'Lo que estudié, formal y por mi cuenta. Siempre aprendiendo.',
     visible: true,
   },
   diplomas: [

@@ -8,6 +8,7 @@ import {
   postman,
   playwright,
   nodeJs,
+  excel,
 } from '../helpers/skills';
 
 const portfolioSectionData = {
@@ -15,6 +16,7 @@ const portfolioSectionData = {
     title: 'Proyectos',
     slug: 'projects',
     icon: 'fa6-solid:rocket',
+    subtitle: 'Proyectos donde junté desarrollo frontend y testing.',
     visible: true,
     screenshots: {
       title: 'Screenshots',
@@ -69,7 +71,7 @@ const portfolioSectionData = {
         'Functional testing and validation of e-commerce: purchase flow, cart, checkout and forms.',
       tagsList: {
         title: 'Technologies',
-        tags: [postman(), playwright()],
+        tags: [postman(), playwright(), excel()],
       },
       links: [demo({ url: 'https://nova-market-g8-i2906-frontend-two.vercel.app/' })],
     },
@@ -86,6 +88,7 @@ const portfolioSectionData = {
           { icon: 'simple-icons:windows', name: 'Windows', iconColor: '#0078D4', url: 'https://www.microsoft.com/windows' },
           { icon: 'simple-icons:linux', name: 'Linux', iconColor: '#FCC624', url: 'https://www.linux.org/' },
           { icon: 'simple-icons:android', name: 'Android', iconColor: '#3DDC84', url: 'https://www.android.com/' },
+          excel(),
         ],
       },
       links: [website({ url: 'https://www.utest.com/' })],

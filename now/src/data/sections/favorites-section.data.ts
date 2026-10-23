@@ -6,6 +6,7 @@ const favoritesSectionData = {
     title: 'My favorites',
     slug: 'favorites',
     icon: 'fa6-solid:star',
+    subtitle: 'Libros, gente y contenido que me inspiran.',
     visible: false,
   },
   books: {

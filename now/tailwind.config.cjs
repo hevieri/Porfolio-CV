@@ -10,7 +10,7 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       white: colors.white,
-      primary: colors.emerald,
+      primary: colors.violet,
       gray: colors.gray,
     },
     extend: {
@@ -28,6 +28,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        display: ['Space Grotesk', 'Inter var', ...defaultTheme.fontFamily.sans],
       },
     },
   },

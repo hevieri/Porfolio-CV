@@ -41,6 +41,11 @@ export interface SectionConfig {
   icon: IconName;
 
   /**
+   * [WEB] Short description displayed next to the section title.
+   */
+  subtitle?: string;
+
+  /**
    * Should section be displayed on the page.
    */
   visible: boolean;

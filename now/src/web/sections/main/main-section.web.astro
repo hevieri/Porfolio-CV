@@ -1,5 +1,6 @@
 ---
 import type { MainSection } from '@/types/sections/main-section.types';
+import Photo from '@/components/photo.astro';
 import Description from '@/web/components/description.astro';
 import DownloadButton from '@/web/components/download-button.astro';
 import LinkButton from '@/web/components/link-button.astro';
@@ -13,43 +14,65 @@ const { action, config, description, details, fullName, image, links, role, tags
 ---
 
 <SectionCard {...config} hideTitle>
-  <div class="flex flex-col gap-6">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <div class="flex flex-col gap-1">
+  <div class="flex flex-col gap-7">
+    <div class="flex items-start justify-between gap-6">
+      <div class="flex flex-col gap-3">
         <Typography variant="main-title">{fullName}</Typography>
-        <Typography variant="main-subtitle">{role}</Typography>
+        <div class="flex items-center gap-3">
+          <span class="h-px w-10 bg-primary-500" aria-hidden="true"></span>
+          <Typography variant="main-subtitle" as="p">{role}</Typography>
+        </div>
       </div>
       {
-        links.length > 0 && (
-          <div class="flex flex-wrap gap-3 sm:flex-nowrap">
-            {links.map((link) => (
-              <LinkButton {...link} />
-            ))}
-          </div>
+        image && (
+          <Photo
+            src={image}
+            alt={fullName}
+            class="h-24 w-24 shrink-0 rounded-2xl object-cover ring-1 ring-gray-800 sm:h-32 sm:w-32"
+            width={256}
+            height={256}
+          />
         )
       }
     </div>
-    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
-      {details.map((detail, i) => (
-        <span class="flex items-center gap-1.5">
-          {i > 0 && <span class="text-gray-600">·</span>}
-          <span class="text-gray-500">{detail.label}:</span>
-          {detail.url ? (
-            <a href={detail.url} target={detail.url.startsWith('http') ? '_blank' : '_self'} class="text-gray-300 hover:text-primary-400 transition-colors underline underline-offset-2 decoration-gray-600 hover:decoration-primary-400">
-              {detail.value}
-            </a>
-          ) : (
-            <span class="text-gray-300">{detail.value}</span>
-          )}
-        </span>
-      ))}
+
+    <div class="flex flex-wrap gap-x-8 gap-y-3 border-y border-gray-800 py-4">
+      {
+        details.map((detail) => (
+          <div class="flex items-baseline gap-2">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-600">{detail.label}</span>
+            {detail.url ? (
+              <a
+                href={detail.url}
+                target={detail.url.startsWith('http') ? '_blank' : '_self'}
+                class="text-sm text-gray-300 transition-colors hover:text-primary-400"
+              >
+                {detail.value}
+              </a>
+            ) : (
+              <span class="text-sm text-gray-300">{detail.value}</span>
+            )}
+          </div>
+        ))
+      }
     </div>
-    <div class="border-t border-gray-700/50 pt-5">
-      <Description content={description} />
-    </div>
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
+    <Description content={description} class="max-w-2xl" />
+
+    <div class="flex flex-wrap items-center justify-between gap-4">
       <TagsList tags={tags} />
-      <DownloadButton {...action} />
+      <div class="flex items-center gap-3">
+        {
+          links.length > 0 && (
+            <div class="flex flex-wrap gap-3">
+              {links.map((link) => (
+                <LinkButton {...link} />
+              ))}
+            </div>
+          )
+        }
+        <DownloadButton {...action} />
+      </div>
     </div>
   </div>
 </SectionCard>

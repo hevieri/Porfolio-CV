@@ -7,6 +7,8 @@ import {
   postman,
   git,
   trello,
+  jira,
+  excel,
   playwright,
   mapbox,
   recharts,
@@ -20,12 +22,14 @@ const experienceSectionData = {
     title: 'Experiencia',
     slug: 'experience',
     icon: 'fa6-solid:suitcase',
+    subtitle: 'Dónde apliqué todo esto en la práctica, en equipos ágiles y proyectos reales.',
     visible: true,
   },
   jobs: [
     {
       role: 'Frontend Developer',
       company: 'No Country',
+      companyUrl: 'https://www.nocountry.tech/',
       image: import('@/assets/logos/nocountry-logo.jpg'),
       dates: [new Date('2026-05'), null],
       description: `
@@ -35,40 +39,42 @@ const experienceSectionData = {
       `,
       tagsList: {
         title: 'Technologies',
-        tags: [react(), tailwindCss(), git(), trello(), mapbox(), recharts(), shadcn()],
+        tags: [react(), tailwindCss(), git(), jira(), trello(), mapbox(), recharts(), shadcn()],
       },
       links: [website({ url: 'https://talent.nocountry.tech/dashboard' })],
     },
     {
-      role: 'Frontend Developer',
+      role: 'Frontend Developer & QA Tester',
       company: 'TalentlyLab',
+      companyUrl: 'https://talentlylab.com.ar/',
       image: import('@/assets/logos/talentlylab-logo.png'),
       dates: [new Date('2026-06'), null],
+      positions: [
+        {
+          role: 'Frontend Developer',
+          description: `
+            - Simulación laboral como Frontend Developer con metodologías ágiles Kanban y Scrum
+            - Desarrollo de interfaces con React y Tailwind CSS
+            - Trabajo en equipo colaborativo
+          `,
+        },
+        {
+          role: 'QA Tester',
+          description: `
+            - Testing de APIs con Postman
+            - Reportes de bugs con evidencia y pasos para reproducir
+            - Validación de criterios de aceptación en ciclos ágiles
+          `,
+        },
+      ],
       description: `
-        - Simulación laboral como Frontend Developer con metodologías ágiles Kanban y Scrum
+        - Simulación laboral con metodologías ágiles Kanban y Scrum
         - Desarrollo de interfaces con React y Tailwind CSS
-        - Trabajo en equipo colaborativo
+        - Testing de APIs con Postman y reportes de bugs con evidencia
       `,
       tagsList: {
         title: 'Technologies',
-        tags: [react(), tailwindCss(), git()],
-      },
-      links: [website({ url: 'https://talentlylab.com.ar/' })],
-    },
-    {
-      role: 'QA Tester',
-      company: 'TalentlyLab',
-      image: import('@/assets/logos/talentlylab-logo.png'),
-      dates: [new Date('2026-06'), null],
-      description: `
-        - Simulación laboral como QA Tester con metodologías ágiles Kanban y Scrum
-        - Testing de APIs con Postman
-        - Reportes de bugs con evidencia
-        - Validación de criterios de aceptación en ciclos ágiles
-      `,
-      tagsList: {
-        title: 'Technologies',
-        tags: [postman(), playwright(), git(), trello()],
+        tags: [react(), tailwindCss(), git(), jira(), trello(), postman(), playwright(), excel()],
       },
       links: [website({ url: 'https://talentlylab.com.ar/' })],
     },
@@ -85,13 +91,14 @@ const experienceSectionData = {
       `,
       tagsList: {
         title: 'Technologies',
-        tags: [postman(), git(), { name: 'uTest', url: 'https://www.utest.com/' }],
+        tags: [postman(), git(), excel(), { name: 'uTest', url: 'https://www.utest.com/' }],
       },
       links: [linkedin({ url: 'https://www.linkedin.com/company/adoptaunjunior/posts/?feedView=all' })],
     },
     {
       role: 'Tester',
       company: 'uTest',
+      companyUrl: 'https://www.utest.com/',
       image: import('@/assets/logos/utest-logo.png'),
       dates: [new Date('2025-08'), null],
       description: `
@@ -105,6 +112,7 @@ const experienceSectionData = {
           { icon: 'simple-icons:windows', name: 'Windows', iconColor: '#0078D4', url: 'https://www.microsoft.com/windows' },
           { icon: 'simple-icons:linux', name: 'Linux', iconColor: '#FCC624', url: 'https://www.linux.org/' },
           { icon: 'simple-icons:android', name: 'Android', iconColor: '#3DDC84', url: 'https://www.android.com/' },
+          excel(),
         ],
       },
       links: [website({ url: 'https://www.utest.com/' })],
@@ -112,6 +120,8 @@ const experienceSectionData = {
     {
       role: 'Maquetado Web & Marketing Digital',
       company: 'ElRincónDelFriki.net',
+      companyUrl: 'https://web.archive.org/web/20180317134754/http://elrincondelfriki.net/',
+      image: import('@/assets/logos/rincondelfriki-logo.png'),
       dates: [new Date('2023-01'), new Date('2024-12')],
       description: `
         - Maquetado y gestión integral del sitio web con WordPress
@@ -129,7 +139,7 @@ const experienceSectionData = {
           { icon: 'fa6-solid:rectangle-ad', name: 'Google AdSense', iconColor: '#4285F4', url: 'https://adsense.google.com/' },
         ],
       },
-      links: [],
+      links: [website({ url: 'https://web.archive.org/web/20180317134754/http://elrincondelfriki.net/' })],
     },
   ],
 } satisfies ReadonlyDeep<ExperienceSection>;

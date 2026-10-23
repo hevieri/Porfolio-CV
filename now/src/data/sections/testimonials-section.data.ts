@@ -7,6 +7,7 @@ const testimonialsSectionData = {
     title: 'Testimonials',
     slug: 'testimonials',
     icon: 'fa6-solid:comment',
+    subtitle: 'Lo que dicen quienes trabajaron conmigo.',
     visible: false,
   },
   testimonials: [

@@ -1,32 +1,36 @@
 ---
-import type { LevelledSkill as LevelledSkillType, SkillSet } from '@/types/sections/skills-section.types';
-import TagsList from '@/web/components/tags-list.astro';
-import Typography from '@/web/components/typography.astro';
-import LevelledSkill from './levelled-skill.astro';
+import type { SkillSet } from '@/types/sections/skills-section.types';
 
 export interface Props extends SkillSet {}
 
 const { skills, title } = Astro.props;
-
-const isLevelledSkillSection = (skills: Props['skills']): skills is LevelledSkillType[] => {
-  const firstSkill = skills[0];
-  if (!firstSkill) return false;
-
-  return 'level' in firstSkill && firstSkill.level !== undefined;
-};
 ---
 
-<div class="flex flex-col gap-3">
-  <Typography variant="section-subtitle">{title}</Typography>
-  {
-    isLevelledSkillSection(skills) ? (
-      <div class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
-        {skills.map((skill) => (
-          <LevelledSkill {...skill} />
-        ))}
-      </div>
-    ) : (
-      <TagsList tags={skills} />
-    )
-  }
+<div class="flex flex-col gap-4">
+  <h3
+    class="inline-block origin-left cursor-default font-display text-base font-bold tracking-tight text-gray-50 transition-transform duration-200 hover:scale-[1.04]"
+  >
+    {title}
+  </h3>
+  <ul class="flex flex-col">
+    {
+      skills.map((skill) => (
+        <li class="border-b border-gray-800 py-2.5 transition-all duration-200 last:border-b-0 hover:pl-1.5">
+          {skill.url && skill.url !== '#' ? (
+            <a
+              href={skill.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-display text-sm font-bold tracking-tight text-gray-100 transition-colors hover:text-primary-400"
+            >
+              {skill.name}
+            </a>
+          ) : (
+            <span class="font-display text-sm font-bold tracking-tight text-gray-100">{skill.name}</span>
+          )}
+          {skill.description && <p class="mt-0.5 text-[13px] leading-snug text-gray-500">{skill.description}</p>}
+        </li>
+      ))
+    }
+  </ul>
 </div>

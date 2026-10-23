@@ -1,15 +1,72 @@
 ---
-import type { SkillsSection } from '@/types/sections/skills-section.types';
+import type { SkillsSection, SkillSet } from '@/types/sections/skills-section.types';
 import SectionCard from '@/web/components/section-card.astro';
-import SkillSet from './skill-set.astro';
+import Icon from '@/web/components/icon.astro';
+import LanguageLevel from './language-level.astro';
+import SkillSetComponent from './skill-set.astro';
 
 export interface Props extends SkillsSection {}
 
 const { config, skillSets } = Astro.props;
+
+const isLanguageSet = (skillSet: SkillSet) => skillSet.title.toLowerCase().includes('idioma');
+
+const languageSets = skillSets.filter(isLanguageSet);
+const regularSets = skillSets.filter((skillSet) => !isLanguageSet(skillSet));
+
+const COLUMN_COUNT = 3;
+
+const columns: SkillSet[][] = Array.from({ length: COLUMN_COUNT }, () => []);
+const columnLoads = Array.from({ length: COLUMN_COUNT }, () => 0);
+
+[...regularSets]
+  .sort((a, b) => b.skills.length - a.skills.length)
+  .forEach((skillSet) => {
+    const lightest = columnLoads.indexOf(Math.min(...columnLoads));
+    columns[lightest]!.push(skillSet);
+    columnLoads[lightest] = columnLoads[lightest]! + skillSet.skills.length;
+  });
 ---
 
 <SectionCard {...config}>
-  <div class="flex flex-col gap-10">
-    {skillSets.map((skillSet) => <SkillSet {...skillSet} />)}
+  <div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-14">
+    {
+      columns
+        .filter((column) => column.length > 0)
+        .map((column) => (
+          <div class="flex min-w-0 flex-col gap-10 lg:flex-1">
+            {column.map((skillSet) => (
+              <SkillSetComponent {...skillSet} />
+            ))}
+          </div>
+        ))
+    }
   </div>
+  {
+    languageSets.length > 0 && (
+      <div class="border-t border-gray-800 pt-8">
+        <div class="mb-6 flex items-baseline justify-between gap-4">
+          <h3
+            class="inline-block cursor-default font-display text-base font-bold tracking-tight text-gray-50 transition-transform duration-200 hover:scale-[1.04] origin-left"
+          >
+            {languageSets[0]!.title}
+          </h3>
+          <span class="text-[10px] uppercase tracking-widest text-gray-600">A1 &rarr; C2</span>
+        </div>
+        <div class="grid max-w-3xl gap-x-14 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          {languageSets.flatMap((languageSet) =>
+            languageSet.skills.map((skill) => (
+              <LanguageLevel
+                name={skill.name}
+                label={'description' in skill ? skill.description : undefined}
+                level={'level' in skill && skill.level !== undefined ? skill.level : 5}
+              >
+                {skill.icon && <Icon slot="icon" name={skill.icon} color={skill.iconColor} size={14} />}
+              </LanguageLevel>
+            ))
+          )}
+        </div>
+      </div>
+    )
+  }
 </SectionCard>

@@ -10,7 +10,7 @@ const { dates } = Astro.props;
 ---
 
 {dates && (
-  <Typography variant="item-subtitle-secondary">
+  <Typography variant="item-subtitle-secondary" class="text-gray-500">
     {formatDateRange(dates)}
   </Typography>
 )}
