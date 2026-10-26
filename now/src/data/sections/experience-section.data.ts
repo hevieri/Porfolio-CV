@@ -100,7 +100,7 @@ const experienceSectionData = {
       company: 'uTest',
       companyUrl: 'https://www.utest.com/',
       image: import('@/assets/logos/utest-logo.png'),
-      dates: [new Date('2025-08'), null],
+      dates: [new Date('2025-08'), new Date('2026-08')],
       description: `
         - Exploratory testing on web and mobile applications
         - Bug documentation with steps to reproduce
