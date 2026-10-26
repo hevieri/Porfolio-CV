@@ -7,8 +7,10 @@ export interface MainSection extends Section {
    * **Ratio**: 1:1
    *
    * **Display size**: 208x208px
+   *
+   * Not used by the current web layout (the hero renders a code card instead).
    */
-  image: Photo;
+  image?: Photo;
 
   /**
    * Your name.
@@ -19,6 +21,13 @@ export interface MainSection extends Section {
    * Your current role.
    */
   role: string;
+
+  /**
+   * [WEB] City and country displayed next to the role, below your name.
+   *
+   * E.g. Buenos Aires, Argentina.
+   */
+  location?: string;
 
   /**
    * Label-value pairs with some key details about you.
@@ -42,9 +51,11 @@ export interface MainSection extends Section {
   description: string;
 
   /**
-   * [WEB] Any information that you want to highlight.
+   * [WEB] Technologies displayed in the "Stack" tile of the hero.
+   *
+   * Only the `name` property is used.
    */
-  tags: Tag[];
+  tags?: Tag[];
 
   /**
    * [WEB] A button that will be used to download your resume.

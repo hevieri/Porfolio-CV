@@ -76,6 +76,11 @@ export interface LabelledValue {
   url?: string;
 
   /**
+   * [WEB] Icon displayed before the value.
+   */
+  icon?: IconName;
+
+  /**
    * [PDF] When labelled value is displayed in a grid, it will span the whole row.
    */
   fullRow?: boolean;
@@ -141,6 +146,11 @@ export interface DownloadButton {
    * If specified, the file will be downloaded immediately (without preview) in all browsers.
    */
   downloadedFileName?: string;
+
+  /**
+   * [WEB] Icon displayed before the button label.
+   */
+  icon?: IconName;
 }
 
 export interface LinkButton {

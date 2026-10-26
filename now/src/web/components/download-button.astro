@@ -1,10 +1,11 @@
 ---
 import type { DownloadButton } from '@/types/shared';
+import Icon from './icon.astro';
 import Typography from './typography.astro';
 
 export interface Props extends DownloadButton {}
 
-const { url, downloadedFileName, label } = Astro.props;
+const { url, downloadedFileName, label, icon } = Astro.props;
 
 const classes = /* tw */ {
   main: 'inline-flex items-center px-4 h-10 rounded-md shadow-sm bg-primary-600 select-none cursor-pointer',
@@ -17,5 +18,8 @@ const className = Object.values(classes).join(' ');
 ---
 
 <Typography variant="button" as="a" href={url} class={className} download={downloadedFileName}>
-  {label}
+  <span class="flex items-center gap-2">
+    {icon && <Icon name={icon} size={15} />}
+    {label}
+  </span>
 </Typography>
